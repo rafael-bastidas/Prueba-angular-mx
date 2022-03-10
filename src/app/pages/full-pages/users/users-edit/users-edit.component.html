@@ -1,0 +1,231 @@
+<section class="users-edit">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <!-- Nav-tabs -->
+            <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs justify-content-left">
+              <li [ngbNavItem]="1">
+                <a ngbNavLink class="nav-link d-flex align-items-center">
+                  <i class="ft-user mr-1"></i>
+                  <span class="d-none d-sm-block">Datos Generales</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <!-- Account content starts -->
+                  <div class="mt-2" id="account">
+                    <!-- Media object starts -->
+                    <div class="media">
+                      <img [src]="getUrlAvatar" alt="avatar"
+                        class="users-avatar-shadow avatar mr-3 rounded-circle" height="64" width="64">
+                      <div class="media-body">
+                        <h4>{{headerDetailsCorporation?.S_NombreCorto}}</h4>
+                      </div>
+                    </div>
+                    <!-- Media object ends -->
+
+                    <!-- Account form starts -->
+                    <form [formGroup]="formDetailsCorporation" novalidate>
+                      <div class="row">
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_NombreCorto">NOMBRE CORTO</label>
+                              <input type="text" id="S_NombreCorto" class="form-control"
+                                formControlName="S_NombreCorto">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_NombreCompleto">NOMBRE COMPLETO</label>
+                              <input type="text" id="S_NombreCompleto" class="form-control"
+                                formControlName="S_NombreCompleto">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_Activo">STATUS*</label>
+                              <select id="S_Activo" class="form-control" formControlName="S_Activo">
+                                <option value="1">Activo</option>
+                                <option value="2">Inactivo</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="D_FechaIncorporacion">FECHA DE INCORPORACIÓN*</label>
+                              <input type="date" id="D_FechaIncorporacion" class="form-control"
+                                formControlName="D_FechaIncorporacion">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_SystemUrl">URL DEL SISTEMA*</label>
+                              <input type="text" id="S_SystemUrl" class="form-control"
+                                formControlName="S_SystemUrl">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
+                          <button type="button" class="btn btn-secondary mb-2 mb-sm-0 mr-sm-2" (click)="actionOne()">
+                            {{getTextBtnOne}}
+                          </button>
+                          <button type="button" class="btn btn-primary" (click)="actionTwo()" [disabled]="formDetailsCorporation.invalid">
+                            {{getTextBtnTwo}}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Account form ends -->
+                  </div>
+                  <!-- Account content ends -->
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="2">
+                <a ngbNavLink class="nav-link d-flex align-items-center">
+                  <i class="ft-info mr-1"></i>
+                  <span class="d-none d-sm-block">Contactos</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <!-- Information content starts -->
+                  <div class="mt-2" id="information">
+                    <!-- Media object starts -->
+                    <div class="media">
+                      <img [src]="getUrlAvatar" alt="avatar"
+                        class="users-avatar-shadow avatar mr-3 rounded-circle" height="64" width="64">
+                      <div class="media-body">
+                        <h4>{{headerDetailsCorporation?.S_NombreCorto}}</h4>
+                      </div>
+                    </div>
+                    <!-- Media object ends -->
+
+                    <!-- Information form starts -->
+                    <form [formGroup]="formContact" novalidate>
+                      <div class="row mb-5">
+                      
+                        <div class="col-12 users-module">
+                          <div class="table-responsive">
+                            <table class="table mb-0">
+                              <thead>
+                                <tr>
+                                  <th>NOMBRE</th>
+                                  <th>PUESTO</th>
+                                  <th>TELÉFONO</th>
+                                  <th>CELULAR</th>
+                                  <th>EMAIL</th>
+                                  <th>OBSERVACIONES</th>
+                                  <th>ACCIONES</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let row of data.tw_contactos_corporativo; let i = index">
+                                  <td>{{row.S_Nombre}}</td>
+                                  <td>{{row.S_Puesto}}</td>
+                                  <td>{{row.N_TelefonoFijo}}</td>
+                                  <td>{{row.N_TelefonoMovil}}</td>
+                                  <td>{{row.S_Email}}</td>
+                                  <td>{{row.S_Comentarios}}</td>
+                                  <td>
+                                    <span (click)="setInfoContact(row, i)"><i class="ft-edit-1 text-primary cursor-pointer"></i></span>
+                                    <span (click)="deleteContact(row.id, i)"><i class="ft-trash-2 text-danger cursor-pointer ml-2"></i></span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_Nombre">NOMBRE*</label>
+                              <input type="text" id="S_Nombre" class="form-control"
+                                formControlName="S_Nombre">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_Puesto">PUESTO</label>
+                              <input type="text" id="S_Puesto" class="form-control"
+                                formControlName="S_Puesto">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_Comentarios">COMENTARIOS</label>
+                              <input type="text" id="S_Comentarios" class="form-control"
+                                formControlName="S_Comentarios">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="N_TelefonoFijo">TELÉFONO FIJO</label>
+                              <input type="number" id="N_TelefonoFijo" class="form-control"
+                                formControlName="N_TelefonoFijo">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="N_TelefonoMovil">TELÉFONO MÓVIL</label>
+                              <input type="number" id="N_TelefonoMovil" class="form-control"
+                                formControlName="N_TelefonoMovil">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="S_Email">EMAIL</label>
+                              <input type="email" id="S_Email" class="form-control"
+                                formControlName="S_Email">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3 align-self-center">
+                          <button type="button" class="btn btn-secondary" (click)="actionBtnContact()" [disabled]="formContact.invalid">{{textBtnContact}}</button>
+                          <button type="button" class="btn btn-danger ml-2" 
+                            (click)="textBtnContact = 'AGREGAR CONTACTO'; formContact.reset()"
+                            *ngIf="textBtnContact == 'ACTUALIZAR CONTACTO'">Cancelar</button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Account form ends -->
+                  </div>
+                  <!-- Information content ends -->
+                </ng-template>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div [ngbNavOutlet]="nav"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
